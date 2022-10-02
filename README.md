@@ -1,2 +1,2 @@
-# meeknu
-Create menus in a weely basis
+# Meeknu-api
+Create menus in a weekly basis
