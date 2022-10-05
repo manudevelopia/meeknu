@@ -6,10 +6,10 @@ COPY go.mod ./
 COPY go.sum ./
 RUN go mod download
 
-COPY ../cmd/meeknu-api/*.go ./
+COPY ./src /app/src
 
-RUN go build -o /meeknu-api
+RUN go build -o meeknu-api src/cmd/meeknu-api/main.go
 
 EXPOSE 1323
 
-CMD [ "/meeknu-api" ]
+CMD [ "/app/meeknu-api" ]
