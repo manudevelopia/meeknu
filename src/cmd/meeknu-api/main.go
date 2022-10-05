@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/manudevelopia/meeknu-api/src/pkg/menu"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -9,7 +10,8 @@ import (
 func main() {
 	e := echo.New()
 	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, World!")
+		menu := menu.Menu{"this is my name"}
+		return c.JSON(http.StatusOK, menu)
 	})
 	e.Logger.Fatal(e.Start(":1323"))
 }
