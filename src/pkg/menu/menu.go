@@ -1,5 +1,10 @@
 package menu
 
+import "time"
+
 type Menu struct {
-	Name string `json:"name"`
+	ID          uint      `json:"id"`
+	Name        string    `json:"name"`
+	Description string    `json:"description"`
+	CreatedOn   time.Time `json:"createdOn"`
 }
