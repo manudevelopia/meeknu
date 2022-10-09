@@ -11,8 +11,8 @@ import (
 func main() {
 	e := echo.New()
 	e.GET("/", func(c echo.Context) error {
-		menu := menu.Menu{1, "this is my name", "my description", time.Now()}
-		return c.JSON(http.StatusOK, menu)
+		m := menu.Menu{ID: 1, Name: "this is my name", Description: "my description", CreatedOn: time.Now()}
+		return c.JSON(http.StatusOK, m)
 	})
 	e.Logger.Fatal(e.Start(":1323"))
 }
