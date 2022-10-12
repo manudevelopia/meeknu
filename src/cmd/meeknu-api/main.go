@@ -2,15 +2,17 @@ package main
 
 import (
 	"database/sql"
+	_ "github.com/joho/godotenv/autoload"
 	"github.com/labstack/echo/v4"
 	_ "github.com/lib/pq"
 	"github.com/manudevelopia/meeknu-api/src/pkg/menu"
 	"net/http"
+	"os"
 )
 
 func main() {
 	e := echo.New()
-	connStr := ""
+	connStr := os.Getenv("DATABASE_URL")
 	db, _ := sql.Open("postgres", connStr)
 
 	e.GET("/", func(c echo.Context) error {
