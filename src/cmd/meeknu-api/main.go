@@ -1,22 +1,21 @@
 package main
 
 import (
-	"database/sql"
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/labstack/echo/v4"
 	_ "github.com/lib/pq"
+	"github.com/manudevelopia/meeknu-api/internal/data"
 	"github.com/manudevelopia/meeknu-api/src/pkg/menu"
+	"log"
 	"net/http"
-	"os"
 )
 
 func main() {
-	e := echo.New()
-	connStr := os.Getenv("DATABASE_URL")
-	db, _ := sql.Open("postgres", connStr)
+	d := data.New()
+	server := echo.New()
 
-	e.GET("/", func(c echo.Context) error {
-		rows, _ := db.Query("SELECT m_id, m_name, m_created_on FROM m_menu")
+	server.GET("/", func(c echo.Context) error {
+		rows, _ := d.DB.Query("SELECT m_id, m_name, m_created_on FROM m_menu")
 		var menus []menu.Menu
 		for rows.Next() {
 			var u menu.Menu
@@ -25,5 +24,6 @@ func main() {
 		}
 		return c.JSON(http.StatusOK, menus)
 	})
-	e.Logger.Fatal(e.Start(":1323"))
+
+	log.Fatal(server.Start(":1323"))
 }
