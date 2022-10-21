@@ -3,7 +3,7 @@ package main
 import (
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/labstack/echo/v4"
-	"github.com/manudevelopia/meeknu-api/internal/data"
+	"github.com/manudevelopia/meeknu-api/src/internal/data"
 	"log"
 	"net/http"
 )
