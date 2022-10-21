@@ -1,8 +1,7 @@
 package data
 
 import (
-	"database/sql"
-	"log"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"sync"
 )
 
@@ -12,15 +11,11 @@ var (
 )
 
 type Data struct {
-	DB *sql.DB
+	DB *pgxpool.Pool
 }
 
 func initDB() {
-	db, err := getDataBaseConnection()
-	if err != nil {
-		log.Panic(err)
-	}
-
+	db := getDataBaseConnection()
 	data = &Data{
 		DB: db,
 	}
@@ -28,8 +23,5 @@ func initDB() {
 
 func New() *Data {
 	once.Do(initDB)
-	if err := data.DB.Ping(); err != nil {
-		log.Panic(err)
-	}
 	return data
 }

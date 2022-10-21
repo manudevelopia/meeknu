@@ -1,13 +1,18 @@
 package data
 
 import (
-	"database/sql"
+	"context"
+	"fmt"
 	"os"
 
-	_ "github.com/lib/pq"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func getDataBaseConnection() (*sql.DB, error) {
-	uri := os.Getenv("DATABASE_URL")
-	return sql.Open("postgres", uri)
+func getDataBaseConnection() *pgxpool.Pool {
+	dbpool, err := pgxpool.New(context.Background(), os.Getenv("DATABASE_URL"))
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Unable to create connection pool: %v\n", err)
+		os.Exit(1)
+	}
+	return dbpool
 }

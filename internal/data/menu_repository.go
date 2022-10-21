@@ -1,7 +1,9 @@
 package data
 
 import (
+	"context"
 	"github.com/manudevelopia/meeknu-api/src/pkg/menu"
+	"log"
 )
 
 type MenuRepository struct {
@@ -10,7 +12,11 @@ type MenuRepository struct {
 
 func (ur *MenuRepository) GetAll() []menu.Menu {
 	const query = "SELECT m_id, m_name, m_created_on FROM m_menu"
-	rows, _ := ur.Data.DB.Query(query)
+	rows, err := ur.Data.DB.Query(context.Background(), query)
+	defer rows.Close()
+	if err != nil {
+		log.Fatal(err)
+	}
 	var menus []menu.Menu
 	for rows.Next() {
 		var u menu.Menu
