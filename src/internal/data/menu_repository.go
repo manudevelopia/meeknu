@@ -10,7 +10,7 @@ type MenuRepository struct {
 }
 
 func (ur *MenuRepository) GetAll() []menu.Menu {
-	const query = "SELECT m_id, m_name, m_created_on FROM m_menu"
+	const query = "SELECT m_id, m_name, m_description, m_created_on FROM m_menu"
 	rows := ur.Data.Query(query)
 	return menuMapper(rows)
 }
@@ -19,7 +19,7 @@ func menuMapper(rows pgx.Rows) []menu.Menu {
 	var menus []menu.Menu
 	for rows.Next() {
 		var u menu.Menu
-		_ = rows.Scan(&u.ID, &u.Name, &u.CreatedOn)
+		_ = rows.Scan(&u.ID, &u.Name, &u.Description, &u.CreatedOn)
 		menus = append(menus, u)
 	}
 	return menus
